@@ -20,22 +20,89 @@ Via Composer
 $ composer require johannesschobel/laravel-userhistory
 ```
 
-## Usage
+## Getting Started
+
+Install the package via composer (see above) or require it directly in your composer.json file using:
+
+``` bash
+"require" : {
+   ...
+   "johannesschobel/laravel-userhistory" : "dev-master",
+   ...
+},
+...
+```
+
+Add the new Package to your providers within your `config/app.php` file:
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+'providers' => [
+   ...
+   'JohannesSchobel\UserHistory\UserHistoryServiceProvider',
+   ...
+],
+```
+
+Then, use the publish command to add the required files to your project:
+
+``` bash
+$ php artisan vendor:publish --provider="JohannesSchobel\UserHistory\UserHistoryServiceProvider"
+```
+
+Migrate the database using
+
+``` bash
+$ php artisan migrate
+``` 
+
+and start customizing the `config/userhistory.php` file. To add additional `actions`, simply add another `const` within the UserHistoryActions class.
+
+Finally, add the `UserHistoryTrait` to your User Model with
+
+``` php
+use UserHistoryTrait;
+```
+
+This will add the needed functions to your Model.
+
+## Usage
+
+To log the user action, simply do something like this:
+
+``` php
+...
+// assume, that $user is the current user
+// e.g., $user = Auth::user();
+
+// also assume, that $object is an object to be saved to the database
+$object->name = "foo";
+$object->description = "bar";
+$result = $object->save();
+
+if($result) {
+   $user->addHistory($object, UserHistoryActions::UPDATE);
+   return redirect()->route("/");
+}
+...
+```
+
+To return all UserHistory Elements for a given user, simply call
+
+``` php
+// assume, that $user is the current user
+// e.g., $user = Auth::user();
+$userhistories = $user->userhistories;
+foreach($userhistories as $userhistory) {
+	$obj = $userhistory->getEntity();
+	// object is now null (if the entity does not exist)
+	// or it is an object of the given model class!
+	...
+}
 ```
 
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-## Testing
-
-``` bash
-$ composer test
-```
 
 ## Contributing
 
@@ -47,8 +114,7 @@ If you discover any security related issues, please email :author_email instead 
 
 ## Credits
 
-- [:author_name][link-author]
-- [All Contributors][link-contributors]
+- [Johannes Schobel][https://github.com/johannesschobel]
 
 ## License
 
