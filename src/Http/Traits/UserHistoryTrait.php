@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace JohannesSchobel\UserHistory\Http\Traits;
 
 use JohannesSchobel\UserHistory\Http\Enums\UserHistoryActions;
