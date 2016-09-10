@@ -11,10 +11,21 @@ namespace JohannesSchobel\UserHistory\Enums;
  */
 class UserHistoryConstants extends Enum {
 
-    const NOTHING   = 0;
-    const SHOW      = 1;
-    const STORE     = 2;
-    const UPDATE    = 3;
-    const DESTROY   = 4;
-    const TOUCH     = 5;
+    const NOTHING       =  0;
+
+    const SHOW          =  1;
+    const CREATE        =  2;
+    const UPDATE        =  3;
+    const DELETE        =  4;
+    const READ          =  5;
+
+    const ACTIVATED     =  6;
+    const DEACTIVATED   =  7;
+
+    const SUBSCRIBED    =  8;
+    const UNSUBSCRIBED  =  9;
+
+    const LIKE          = 10;
+
+    const TOUCH         = 11;
 }

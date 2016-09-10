@@ -55,8 +55,8 @@ class UserHistoryActions extends UserHistoryConstants {
 }
 ```
 ### ! Heads up !
-**Note, that the operations 0 to 10 are currently reserved for future changes.**
-**If you define your own actions, start with ID 11!**
+**Note, that the operations 0 to 99 are currently reserved for future changes.**
+**If you define your own actions, start with ID 100!**
 
 Finally, add the `UserHistoryTrait` to your `User` model by adding the line
 
