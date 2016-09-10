@@ -1,20 +1,7 @@
-# Changelog
+# Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
 
-All Notable changes to `laravel-userhistory` will be documented in this file
-
-## NEXT - YYYY-MM-DD
-
-### Added
-- Nothing
-
-### Deprecated
-- Nothing
-
-### Fixed
-- Nothing
-
-### Removed
-- Nothing
-
-### Security
-- Nothing
+## 2016-09-11
+##### Initial Commit
+* Refactoring and PSR-x

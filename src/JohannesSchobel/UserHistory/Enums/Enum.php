@@ -1,8 +1,9 @@
 <?php
 
-namespace JohannesSchobel\UserHistory\Http\Enums;
+namespace JohannesSchobel\UserHistory\Enums;
 
 abstract class Enum {
+
     private static $constCacheArray = NULL;
 
     private static function getConstants() {

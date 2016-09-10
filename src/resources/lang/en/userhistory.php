@@ -7,8 +7,10 @@
  */
 
 return [
-    "nothing" => "You did nothing with the :entity :name",
-    "store" => "You stored the :entity :name",
-    "update" => "You updated the :entity :name",
-    "destroy" => "You deleted the :entity :name",
+    "nothing"   => "You did nothing with the :entity :name",
+    "show"      => "You have looked at the :entity :name",
+    "store"     => "You have stored the :entity :name",
+    "update"    => "You have updated the :entity :name",
+    "destroy"   => "You have deleted the :entity :name",
+    "touch"     => "You have touched the :entity :name",
 ];

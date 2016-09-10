@@ -1,19 +1,12 @@
 <?php
  
-namespace JohannesSchobel\UserHistory\Http\Traits;
+namespace JohannesSchobel\UserHistory\Traits;
 
-use JohannesSchobel\UserHistory\Http\Enums\UserHistoryActions;
+use JohannesSchobel\UserHistory\Enums\UserHistoryActions;
 use JohannesSchobel\UserHistory\Models\Userhistory;
 
 trait UserHistoryTrait
 {
-    /*
-    |----------------------------------------------------------------------
-    | UserHistory Trait Methods
-    |----------------------------------------------------------------------
-    |
-    */
-
     /**
      * Users can have many Userhistories.
      *
@@ -21,12 +14,19 @@ trait UserHistoryTrait
      */
     public function userhistories()
     {
-        $model = config('userhistory.userhistory', 'JohannesSchobel\UserHistory\Models\Userhistory');
+        $model = config('userhistory.models.userhistory');
         return $this->hasMany($model)->orderBy("updated_at", "DESC");
     }
 
-    public function addHistory($obj, $action) {
-
+    /**
+     * Creates a new Userhistory entry and returns it
+     *
+     * @param $obj
+     * @param $action
+     * @return Userhistory
+     */
+    public function logAction($obj, $action)
+    {
         $userhistory = new Userhistory();
         $userhistory->user_id = $this->id;
 
@@ -37,5 +37,7 @@ trait UserHistoryTrait
         $userhistory->action_id = $action;
 
         $userhistory->save();
+
+        return $userhistory;
     }
 }

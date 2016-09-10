@@ -12,7 +12,7 @@ class Userhistory extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user() {
-        return $this->belongsTo(config("auth.model"));
+        return $this->belongsTo(config("userhistory.models.user"));
     }
 
     /**
@@ -30,7 +30,7 @@ class Userhistory extends Model {
         }
 
         // get the object of the respective class!
-        $object = call_user_func($class . '::find', $this->entity_id);
+        $object = call_user_func($class . '::findOrFail', $this->entity_id);
 
         return $object;
     }

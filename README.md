@@ -10,15 +10,14 @@ $ composer require johannesschobel/laravel-userhistory
 
 ## Getting Started
 
-Install the package via composer (see above) or require it directly in your composer.json file using:
+Install the package via composer (see above) or require it directly in your `composer.json` file using:
 
-``` bash
+``` json
 "require" : {
-   ...
+   ...,
    "johannesschobel/laravel-userhistory" : "dev-master",
    ...
 },
-...
 ```
 
 Add the new Package to your providers within your `config/app.php` file:
@@ -26,7 +25,7 @@ Add the new Package to your providers within your `config/app.php` file:
 ``` php
 'providers' => [
    ...
-   'JohannesSchobel\UserHistory\UserHistoryServiceProvider',
+   JohannesSchobel\UserHistory\UserHistoryServiceProvider::class,
    ...
 ],
 ```
@@ -43,22 +42,33 @@ Migrate the database using
 $ php artisan migrate
 ``` 
 
-and start customizing the `config/userhistory.php` file. To add additional `actions`, simply add another `const` within the UserHistoryActions class.
+and start customizing the `config/userhistory.php` file.
 
-Finally, add the `UserHistoryTrait` to your User Model with
+The package ships with a few default actions (e.g., `SHOW`, `STORE`, `DELETE` and so on).
+However, you can add your own specific actions by simply creating your own class:
+
+``` php 
+class UserHistoryActions extends UserHistoryConstants {
+   const TEST = 11;
+   const FOO = 12;
+   const BAR = 13;
+}
+```
+### ! Heads up !
+**Note, that the operations 0 to 10 are currently reserved for future changes.**
+**If you define your own actions, start with ID 11!**
+
+Finally, add the `UserHistoryTrait` to your `User` model by adding the line
 
 ``` php
 use UserHistoryTrait;
 ```
 
-This will add the needed functions to your Model.
-
 ## Usage
 
-To log the user action, simply do something like this:
+To log a user's action, simply do something like this:
 
 ``` php
-...
 // assume, that $user is the current user
 // e.g., $user = Auth::user();
 
@@ -68,10 +78,11 @@ $object->description = "bar";
 $result = $object->save();
 
 if($result) {
-   $user->addHistory($object, UserHistoryActions::UPDATE);
-   return redirect()->route("/");
+   // log, that the user have updated a given record
+   $history = $user->logAction($object, UserHistoryActions::UPDATE);
 }
-...
+
+// continue with your business logic
 ```
 
 To return all UserHistory Elements for a given user, simply call
@@ -84,19 +95,14 @@ foreach($userhistories as $userhistory) {
 	$obj = $userhistory->getEntity();
 	// object is now null (if the entity does not exist)
 	// or it is an object of the given model class!
-	...
 }
 ```
 
-If you would like to create a timeline, showing all actions a user made, there is already a `userhistory` language file available.
+If you want to create a timeline, showing all actions a user made, there is already a `userhistory` language file available.
 
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
@@ -104,23 +110,11 @@ If you discover any security related issues, please email :author_email instead 
 
 ## Credits
 
-- [Johannes Schobel][https://github.com/johannesschobel]
+- Johannes Schobel [https://github.com/johannesschobel]
 
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/league/:package_name.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/thephpleague/:package_name/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/thephpleague/:package_name.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/thephpleague/:package_name.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/league/:package_name.svg?style=flat-square
-
-[link-packagist]: https://packagist.org/packages/league/:package_name
-[link-travis]: https://travis-ci.org/thephpleague/:package_name
-[link-scrutinizer]: https://scrutinizer-ci.com/g/thephpleague/:package_name/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/thephpleague/:package_name
-[link-downloads]: https://packagist.org/packages/league/:package_name
-[link-author]: https://github.com/:author_username
+[link-author]: https://github.com/johannesschobel
 [link-contributors]: ../../contributors
