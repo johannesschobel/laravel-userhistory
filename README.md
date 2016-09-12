@@ -49,9 +49,9 @@ However, you can add your own specific actions by simply creating your own class
 
 ``` php 
 class UserHistoryActions extends UserHistoryConstants {
-   const TEST = 11;
-   const FOO = 12;
-   const BAR = 13;
+   const TEST = 100;
+   const FOO = 101;
+   const BAR = 102;
 }
 ```
 ### ! Heads up !
