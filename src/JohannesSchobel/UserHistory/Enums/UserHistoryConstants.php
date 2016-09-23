@@ -22,10 +22,24 @@ class UserHistoryConstants extends Enum {
     const ACTIVATED     =  6;
     const DEACTIVATED   =  7;
 
-    const SUBSCRIBED    =  8;
-    const UNSUBSCRIBED  =  9;
+    const SUBSCRIBE     =  8;
+    const UNSUBSCRIBE   =  9;
 
     const LIKE          = 10;
+    const DISLIKE       = 11;
 
-    const TOUCH         = 11;
+    const OK            = 12;
+    const NOT_OK        = 13;
+
+    const TOUCH         = 15;
+
+
+
+    const SMILE         = 20;
+    const LAUGH         = 21;
+    const PARTY         = 22;
+    const HEART         = 23;
+    const SAD           = 24;
+    const CONFUSED      = 25;
+
 }
