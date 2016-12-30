@@ -19,14 +19,14 @@ class UserHistoryConstants extends Enum {
     const DELETE        =  4;
     const READ          =  5;
 
-    const ACTIVATED     =  6;
-    const DEACTIVATED   =  7;
+    const ACTIVATE      =  6;
+    const DEACTIVATE    =  7;
 
     const SUBSCRIBE     =  8;
     const UNSUBSCRIBE   =  9;
 
     const LIKE          = 10;
-    const DISLIKE       = 11;
+    const UNLIKE        = 11;
 
     const OK            = 12;
     const NOT_OK        = 13;
@@ -41,5 +41,9 @@ class UserHistoryConstants extends Enum {
     const HEART         = 23;
     const SAD           = 24;
     const CONFUSED      = 25;
+
+    const PROFILE_CHANGED           = 50;
+    const PROFILE_PASSWORD_CHANGED  = 51;
+    const PROFILE_PASSWORD_FORGOT   = 52;
 
 }

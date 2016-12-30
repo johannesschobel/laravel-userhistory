@@ -2,7 +2,6 @@
  
 namespace JohannesSchobel\UserHistory\Traits;
 
-use JohannesSchobel\UserHistory\Enums\UserHistoryConstants;
 use JohannesSchobel\UserHistory\Models\Userhistory;
 
 trait UserHistoryTrait
@@ -27,13 +26,15 @@ trait UserHistoryTrait
      */
     public function logAction($obj, $action)
     {
+        $actions = config('userhistory.actions');
+
         $userhistory = new Userhistory();
         $userhistory->user_id = $this->id;
 
         $userhistory->entity = get_class($obj);
         $userhistory->entity_id = $obj->id;
 
-        $userhistory->action = UserHistoryConstants::getValue($action);
+        $userhistory->action = $actions::getKeyForValue($action);
         $userhistory->action_id = $action;
 
         $userhistory->save();

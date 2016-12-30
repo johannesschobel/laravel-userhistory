@@ -4,10 +4,10 @@ namespace JohannesSchobel\UserHistory\Enums;
 
 abstract class Enum {
 
-    private static $constCacheArray = NULL;
+    private static $constCacheArray = null;
 
     private static function getConstants() {
-        if (self::$constCacheArray == NULL) {
+        if (self::$constCacheArray == null) {
             self::$constCacheArray = [];
         }
         $calledClass = get_called_class();
@@ -19,7 +19,7 @@ abstract class Enum {
         return self::$constCacheArray[$calledClass];
     }
 
-    public static function isValidName($name, $strict = false) {
+    public static function isValidKey($name, $strict = false) {
         $constants = self::getConstants();
 
         if ($strict) {
@@ -35,21 +35,12 @@ abstract class Enum {
         return in_array($value, $values, $strict = true);
     }
 
-    public static function getKeys(){
-        $class = new \ReflectionClass(get_called_class());
-        return array_keys($class->getConstants());
+    public static function getKeyForValue($value) {
+        return array_search($value, self::getConstants());
     }
 
-    public static function getValues(){
-        $class = new \ReflectionClass(get_called_class());
-        return array_values($class->getConstants());
-    }
-
-    public static function getValue($key) {
-        return self::getKeys()[$key];
-    }
-
-    public static function getKey($value) {
-        return array_search($value, self::getKeys());
+    public static function getValueForKey($key) {
+        $constants = self::getConstants();
+        return $constants[$key];
     }
 }
