@@ -2,7 +2,7 @@
 
 namespace JohannesSchobel\UserHistory\Enums;
 
-abstract class Enum {
+abstract class UserHistoryEnum {
 
     private static $constCacheArray = null;
 

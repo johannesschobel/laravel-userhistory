@@ -7,30 +7,30 @@
  */
 
 return [
-    'nothing'       => 'You did nothing with the :entity :name.',
+    'default_nothing'       => 'You did nothing with the :entity :name.',
     
-    'show'          => 'You have looked at the :entity :name.',
-    'create'        => 'You have stored the :entity :name.',
-    'update'        => 'You have updated the :entity :name.',
-    'delete'        => 'You have deleted the :entity :name.',
-    'read'          => 'You have read the :entity :name.',
+    'default_show'          => 'You have looked at the :entity :name.',
+    'default_create'        => 'You have stored the :entity :name.',
+    'default_update'        => 'You have updated the :entity :name.',
+    'default_delete'        => 'You have deleted the :entity :name.',
+    'default_read'          => 'You have read the :entity :name.',
 
-    'activate'      => 'You have activated the :entity :name.',
-    'deactivate'    => 'You have deactivated the :entity :name.',
+    'default_activate'      => 'You have activated the :entity :name.',
+    'default_deactivate'    => 'You have deactivated the :entity :name.',
 
-    'subscribe'     => 'You have subscribed yourself to the :entity :name.',
-    'unsubscribe'   => 'You have unsubscribed yourself from the :entity :name.',
+    'default_subscribe'     => 'You have subscribed yourself to the :entity :name.',
+    'default_unsubscribe'   => 'You have unsubscribed yourself from the :entity :name.',
 
-    'like'          => 'You liked the :entity :name.',
-    'unlike'        => 'You unliked the :entity :name.',
+    'default_like'          => 'You liked the :entity :name.',
+    'default_unlike'        => 'You unliked the :entity :name.',
 
-    'ok'            => 'You think the :entity :name is ok.',
-    'not_ok'        => 'you don\'t think the :entity :name is ok.',
+    'default_ok'            => 'You think the :entity :name is ok.',
+    'default_not_ok'        => 'You don\'t think the :entity :name is ok.',
 
-    'touch'         => 'You have touched the :entity :name.',
+    'default_touch'         => 'You have touched the :entity :name.',
 
-    'profile_changed' => 'You have changed your profile.',
-    'profile_password_changed' => 'You have changed your password.',
-    'profile_password_forgot' => 'You have forgotten your password.',
+    'default_profile_changed' => 'You have changed your profile.',
+    'default_profile_password_changed' => 'You have changed your password.',
+    'default_profile_password_forgot' => 'You have forgotten your password.',
 
 ];

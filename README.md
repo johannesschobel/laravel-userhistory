@@ -1,5 +1,7 @@
 # Laravel Userhistory
 
+Laravel Userhistory is a package that lets you document the activities, resective users has performed on Models.
+
 ## Install
 
 Via Composer
@@ -36,7 +38,7 @@ Then, use the publish command to add the required files to your project:
 $ php artisan vendor:publish --provider="JohannesSchobel\UserHistory\UserHistoryServiceProvider"
 ```
 
-Migrate the database using
+Migrate the database using the following command:
 
 ``` bash
 $ php artisan migrate
@@ -44,21 +46,30 @@ $ php artisan migrate
 
 and start customizing the `config/userhistory.php` file.
 
-The package ships with a few default actions (e.g., `SHOW`, `STORE`, `DELETE` and so on).
-However, you can add your own specific actions by simply creating your own class:
+The config entry `userhistory.models.user`, thereby, reference your main model. If you rely on the Laravel framework, 
+this is already configured properly. The config entry `userhistory.models.userhistory`, however, references the 
+Userhistory model. If you use the model provided by this package, everything is fine as well.
+
+The `userhistory.actions` references a class, providing your actions, you want to be able to track. The package already 
+ships with a few default actions (e.g., `SHOW`, `STORE`, `DELETE` and so on). However, you can add your own specific 
+actions by simply creating your own class file like so:
 
 ``` php 
-class UserHistoryActions extends UserHistoryConstants {
-   const TEST = 100;
-   const FOO = 101;
-   const BAR = 102;
+use JohannesSchobel\UserHistory\Enums\UserHistoryEnum;
+class UserHistoryActions extends UserHistoryEnum {
+   
+   const CREATE = 100;
+   const UPDATE = 101;
+   const DELETE = 102;
+   
+   const PROFILE_CHANGED = 110;
+   const PROFILE_PASSWORD_CHANGED = 111;
+   
+   // and so on.. 
 }
 ```
-### ! Heads up !
-**Note, that the operations 0 to 99 are currently reserved for future changes.**
-**If you define your own actions, start with ID 100!**
 
-Finally, add the `UserHistoryTrait` to your `User` model by adding the line
+Finally, add the `UserHistoryTrait`, which is defined in this package, to your `User` model by adding the following line:
 
 ``` php
 use UserHistoryTrait;
@@ -78,14 +89,14 @@ $object->description = "bar";
 $result = $object->save();
 
 if($result) {
-   // log, that the user have updated a given record
+   // create a log entry indicating that the user has updated a given record
    $history = $user->logAction($object, UserHistoryActions::UPDATE);
 }
 
 // continue with your business logic
 ```
 
-To return all UserHistory Elements for a given user, simply call
+To return all `Userhistory` objects for a given user, simply call
 
 ``` php
 // assume, that $user is the current user
@@ -98,7 +109,52 @@ foreach($userhistories as $userhistory) {
 }
 ```
 
-If you want to create a timeline, showing all actions a user made, there is already a `userhistory` language file available.
+### More Complex Example
+
+You can easily create some kind of `timeline`, which provides information about all actions a user has done. In this 
+example, we will use the [League/Fractal](https://github.com/thephpleague/fractal) which provides `Transformers`. 
+Furthermore, the Laravel framework is used.
+
+First, we create a `UserHistoryTransformer`, which might look like this:
+
+``` php
+class UserHistoryTransformer extends TransformerAbstract
+{
+    public function transform(Userhistory $history)
+    {
+        $entity = $history->getEntity();
+        
+        return [
+            'id' 	    => $history->id,
+            'text'      => Lang::get('useractivities.' . strtolower($history->action), [], app()->getLocale()),
+            'name'      => $entity->title,
+
+            'uri'       => $entity->getSelfURI(),
+
+            'created_at' => $history->created_at,
+        ];
+    }
+}
+```
+
+Next, we will define respective endpoint, which will allow us to retrieve all required information. Lets create the
+endpoint `GET /my/activities` in Laravel's route file.
+
+Finally, wire the respective controller method and the transformer together. This might look like this:
+
+``` php
+class MyController extends Controller {
+    // more methods here
+    
+    public function myActivities(Request $request) {
+        $user = // authenticate the current user from the request (e.g., by using JWT)
+
+        $histories = $user->userhistories;
+
+        return $this->response()->collection($histories, new UserHistoryTransformer());
+    }
+}
+```
 
 ## Change log
 

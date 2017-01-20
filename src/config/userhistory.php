@@ -7,5 +7,5 @@ return [
         'userhistory' => \JohannesSchobel\UserHistory\Models\Userhistory::class,
     ],
 
-    'actions' => \JohannesSchobel\UserHistory\Enums\UserHistoryConstants::class,
+    'actions' => \JohannesSchobel\UserHistory\Enums\UserHistoryDefault::class,
 ];
